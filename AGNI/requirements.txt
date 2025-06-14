@@ -1,0 +1,8 @@
+Flask
+keras
+Pillow
+numpy
+groq
+deep-translator
+gunicorn
+scikit-learn
