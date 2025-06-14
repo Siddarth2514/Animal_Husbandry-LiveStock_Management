@@ -1,9 +1,8 @@
 Flask
-keras
+tensorflow-cpu==2.15.0  # Or 2.9.3, but 2.15.0 is the last to support Python 3.9 officially
 Pillow
 numpy
 groq
 deep-translator
 gunicorn
 scikit-learn
-tensorflow-cpu==2.9.3
