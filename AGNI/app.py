@@ -9,7 +9,7 @@ from deep_translator import GoogleTranslator
 
 app = Flask(__name__)
 
-model = load_model("keras_Model.h5", compile=False)
+model = load_model("keras_model.h5", compile=False)
 class_names = open("labels.txt", "r").readlines()
 
 # Medication suggestions for specific diseases
