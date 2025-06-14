@@ -9,11 +9,8 @@ from deep_translator import GoogleTranslator
 
 app = Flask(__name__)
 
-# Load the model for disease detection
-model = load_model("s3/keras_Model.h5", compile=False)
-
-# Load the labels for disease detection
-class_names = open("s3/labels.txt", "r").readlines()
+model = load_model("keras_Model.h5", compile=False)
+class_names = open("labels.txt", "r").readlines()
 
 # Medication suggestions for specific diseases
 medications = {
