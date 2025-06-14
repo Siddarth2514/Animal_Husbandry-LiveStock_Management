@@ -6,4 +6,4 @@ groq
 deep-translator
 gunicorn
 scikit-learn
-tensorflow==2.11.0
+tensorflow==2.9.3
