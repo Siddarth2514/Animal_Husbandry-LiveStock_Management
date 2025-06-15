@@ -1,5 +1,5 @@
 Flask
-tensorflow-cpu==2.15.0  # Or 2.9.3, but 2.15.0 is the last to support Python 3.9 officially
+tensorflow-cpu==2.9.3  # Or 2.9.3, but 2.15.0 is the last to support Python 3.9 officially
 Pillow
 numpy<2
 groq
