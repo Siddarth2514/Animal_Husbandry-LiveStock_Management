@@ -267,4 +267,4 @@ def veterinary_map():
     return render_template("veterinary_map.html")
 
 if __name__ == "__main__":
-    app.run(debug=True)
+    app.run(host="0.0.0.0", port=8000)
