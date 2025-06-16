@@ -1,11 +1,17 @@
 {
   "name": "agrovet-static",
   "version": "1.0.0",
-  "description": "AgroVet - Static version for Netlify deployment",
+  "description": "Static website for agrovet services",
+  "main": "index.js",
   "scripts": {
-    "build": "echo 'Build complete - static files ready'",
-    "dev": "python -m http.server 8000"
+    "dev": "npx http-server -p 8000 -c-1",
+    "start": "npx http-server -p 8000 -c-1",
+    "build": "echo 'No build step required for static site'"
   },
-  "devDependencies": {},
-  "dependencies": {}
+  "keywords": ["agrovet", "static", "website"],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "http-server": "^14.1.1"
+  }
 }
