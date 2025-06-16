@@ -1,0 +1,496 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AgroVet</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;700&display=swap');
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Poppins', sans-serif;
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      overflow: hidden;
+      position: relative;
+    }
+
+    /* Background Slider */
+    .background-slider {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-size: cover;
+      background-position: center;
+      background-image: url('https://images.pexels.com/photos/422218/pexels-photo-422218.jpeg');
+      animation: slide 15s infinite linear;
+    }
+
+    @keyframes slide {
+      0%, 100% { background-image: url('https://images.pexels.com/photos/422218/pexels-photo-422218.jpeg'); }
+      33% { background-image: url('https://images.pexels.com/photos/1108099/pexels-photo-1108099.jpeg'); }
+      66% { background-image: url('https://images.pexels.com/photos/1108099/pexels-photo-1108099.jpeg'); }
+    }
+
+    .container {
+      position: relative;
+      z-index: 1;
+      text-align: center;
+      background: rgba(0, 0, 0, 0.7); 
+      padding: 30px;
+      border-radius: 15px;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.5);
+      width: 80%;
+      max-width: 800px;
+    }
+
+    h1 {
+      font-size: 3em;
+      margin-bottom: 10px;
+      color: #ffcc29; 
+    }
+    
+    p {
+      font-size: 1.3em;
+      margin-bottom: 30px;
+      color: #ddd; 
+    }
+
+    .button-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+    }
+
+    .button {
+      background: linear-gradient(45deg, #00c9ff, #92fe9d); 
+      color: white;
+      padding: 20px;
+      text-decoration: none;
+      border-radius: 10px;
+      font-size: 1.1em;
+      font-weight: bold;
+      text-align: center;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+      transition: transform 0.3s, box-shadow 0.3s;
+      cursor: pointer;
+      border: none;
+    }
+
+    .button:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 6px 15px rgba(0, 0, 0, 0.4);
+      background: linear-gradient(45deg, #4facfe, #00f2fe); 
+    }
+
+    footer {
+      margin-top: 20px;
+      font-size: 0.9em;
+      color: #aaa;
+    }
+
+    footer a {
+      color: #ffcc29;
+      text-decoration: none;
+    }
+
+    .language-select {
+      position: absolute;
+      top: 10px;
+      right: 20px;
+    }
+
+    .modal {
+      display: none;
+      position: fixed;
+      z-index: 1000;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0,0,0,0.5);
+    }
+
+    .modal-content {
+      background-color: #fefefe;
+      margin: 5% auto;
+      padding: 20px;
+      border-radius: 10px;
+      width: 90%;
+      max-width: 600px;
+      max-height: 80vh;
+      overflow-y: auto;
+    }
+
+    .close {
+      color: #aaa;
+      float: right;
+      font-size: 28px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    .close:hover {
+      color: black;
+    }
+
+    @media (max-width: 768px) {
+      .button-grid {
+        grid-template-columns: 1fr;
+      }
+      
+      h1 {
+        font-size: 2em;
+      }
+      
+      .container {
+        width: 95%;
+        padding: 20px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="background-slider"></div>
+
+  <div class="language-select">
+    <label for="language">Language:</label>
+    <select id="language" onchange="changeLanguage()">
+      <option value="en">English</option>
+      <option value="kn">Kannada</option>
+      <option value="hi">Hindi</option>
+      <option value="ta">Tamil</option>
+      <option value="te">Telugu</option>
+    </select>
+  </div>
+
+  <div class="container" id="content">
+    <h1 data-translate="AgroVet">AgroVet</h1>
+    <p data-translate='"Empowering Animal Rearing with Modern Solutions"'>"Empowering Animal Rearing with Modern Solutions"</p>
+    <div class="button-grid">
+      <button class="button" data-translate="Rearing Guidance" onclick="openModal('rearing-modal')">Rearing Guidance</button>
+      <button class="button" data-translate="AI Chatbot" onclick="openModal('chatbot-modal')">AI Chatbot</button>
+      <button class="button" data-translate="Disease Detection" onclick="openModal('disease-modal')">Disease Detection</button>
+      <button class="button" data-translate="Govt Schemes" onclick="openModal('schemes-modal')">Govt Schemes</button>
+      <button class="button" data-translate="Veterinary Maps" onclick="openModal('vet-modal')">Veterinary Maps</button>
+      <button class="button" data-translate="Information Hub" onclick="openModal('info-modal')">Information Hub</button>
+    </div>
+  </div>
+
+  <!-- Modals -->
+  <div id="rearing-modal" class="modal">
+    <div class="modal-content">
+      <span class="close" onclick="closeModal('rearing-modal')">&times;</span>
+      <h2>Animal Rearing Guidance</h2>
+      <div id="rearing-content">
+        <form id="rearing-form">
+          <div style="margin-bottom: 15px;">
+            <label for="animal_type">Select Animal Type:</label>
+            <select id="animal_type" name="animal_type" style="width: 100%; padding: 8px; margin-top: 5px;">
+              <option value="Cow">Cow</option>
+              <option value="Buffalo">Buffalo</option>
+              <option value="Pig">Pig</option>
+              <option value="Goat">Goat</option>
+              <option value="Sheep">Sheep</option>
+              <option value="Poultry">Poultry</option>
+              <option value="Bee Hiving">Bee Hiving</option>
+              <option value="Sericulture">Sericulture</option>
+            </select>
+          </div>
+          <div style="margin-bottom: 15px;">
+            <label for="number_of_animals">Number of Animals:</label>
+            <input type="number" id="number_of_animals" name="number_of_animals" style="width: 100%; padding: 8px; margin-top: 5px;" required>
+          </div>
+          <button type="submit" style="background: #2C3E50; color: white; padding: 10px 20px; border: none; border-radius: 5px; cursor: pointer;">Get Guidance</button>
+        </form>
+        <div id="rearing-results" style="margin-top: 20px; display: none;"></div>
+      </div>
+    </div>
+  </div>
+
+  <div id="chatbot-modal" class="modal">
+    <div class="modal-content">
+      <span class="close" onclick="closeModal('chatbot-modal')">&times;</span>
+      <h2>AI Chatbot</h2>
+      <div style="height: 400px; border: 1px solid #ddd; overflow-y: auto; padding: 10px; margin: 10px 0;" id="chat-messages">
+        <div style="background: #f0f0f0; padding: 10px; border-radius: 10px; margin-bottom: 10px;">
+          Hello! I'm your agricultural assistant. How can I help you today?
+        </div>
+      </div>
+      <div style="display: flex; gap: 10px;">
+        <input type="text" id="chat-input" placeholder="Type your message..." style="flex: 1; padding: 10px; border: 1px solid #ddd; border-radius: 5px;">
+        <button onclick="sendMessage()" style="background: #2C3E50; color: white; padding: 10px 20px; border: none; border-radius: 5px; cursor: pointer;">Send</button>
+      </div>
+    </div>
+  </div>
+
+  <div id="disease-modal" class="modal">
+    <div class="modal-content">
+      <span class="close" onclick="closeModal('disease-modal')">&times;</span>
+      <h2>Disease Detection</h2>
+      <p>Upload an image of the animal to detect diseases and get preventive measures.</p>
+      <input type="file" id="disease-image" accept="image/*" style="margin: 10px 0;">
+      <button onclick="analyzeImage()" style="background: #2C3E50; color: white; padding: 10px 20px; border: none; border-radius: 5px; cursor: pointer;">Analyze Image</button>
+      <div id="disease-results" style="margin-top: 20px;"></div>
+    </div>
+  </div>
+
+  <div id="schemes-modal" class="modal">
+    <div class="modal-content">
+      <span class="close" onclick="closeModal('schemes-modal')">&times;</span>
+      <h2>Government Schemes and Financial Aids</h2>
+      <div style="max-height: 400px; overflow-y: auto;">
+        <h3>National Livestock Mission (NLM)</h3>
+        <p>Promotes sustainable development in the livestock sector with breed improvement and feed development programs.</p>
+        <ul>
+          <li>Financial assistance up to 50% for livestock projects</li>
+          <li>Support for fodder and feed development</li>
+          <li>Infrastructure development assistance</li>
+        </ul>
+        
+        <h3>Rashtriya Gokul Mission (RGM)</h3>
+        <p>Focuses on conservation and improvement of indigenous bovine breeds.</p>
+        <ul>
+          <li>Breed multiplication farms</li>
+          <li>Scientific breeding programs</li>
+          <li>IVF-based technology support</li>
+        </ul>
+        
+        <h3>Dairy Entrepreneurship Development Scheme (DEDS)</h3>
+        <p>Encourages modern dairy farms and milk processing units.</p>
+        <ul>
+          <li>Subsidy ranging from 25% to 33%</li>
+          <li>Subsidized loans through NABARD</li>
+          <li>Training and capacity building</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <div id="vet-modal" class="modal">
+    <div class="modal-content">
+      <span class="close" onclick="closeModal('vet-modal')">&times;</span>
+      <h2>Find Nearby Veterinary Hospitals</h2>
+      <p>Click the button below to find veterinary hospitals near your location.</p>
+      <button onclick="findVetHospitals()" style="background: #2C3E50; color: white; padding: 10px 20px; border: none; border-radius: 5px; cursor: pointer; margin: 10px 0;">Locate Vet Hospitals</button>
+      <iframe src="https://www.google.com/maps?q=Veterinary+Hospital&output=embed" width="100%" height="300" style="border: 0; border-radius: 8px; margin-top: 10px;"></iframe>
+    </div>
+  </div>
+
+  <div id="info-modal" class="modal">
+    <div class="modal-content">
+      <span class="close" onclick="closeModal('info-modal')">&times;</span>
+      <h2>Information Hub</h2>
+      <div style="max-height: 400px; overflow-y: auto;">
+        <h3>Latest Innovations in Animal Husbandry</h3>
+        <ul>
+          <li><strong>IoT-based Livestock Monitoring:</strong> Smart sensors for real-time health monitoring</li>
+          <li><strong>Precision Feeding Systems:</strong> Automated feeding based on individual animal needs</li>
+          <li><strong>Genetic Testing:</strong> Advanced breeding programs using DNA analysis</li>
+          <li><strong>Mobile Veterinary Apps:</strong> Digital health records and telemedicine</li>
+        </ul>
+        
+        <h3>Best Practices</h3>
+        <ul>
+          <li>Regular health check-ups and vaccinations</li>
+          <li>Proper nutrition and feeding schedules</li>
+          <li>Clean and hygienic living conditions</li>
+          <li>Stress reduction techniques</li>
+          <li>Record keeping for better management</li>
+        </ul>
+        
+        <h3>Emergency Contacts</h3>
+        <p><strong>National Animal Disease Emergency:</strong> 1962</p>
+        <p><strong>Veterinary Helpline:</strong> Contact your local veterinary office</p>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Animal data for calculations
+    const animalData = {
+      'Cow': {area_size: 19.81, feed_type: 'Green Feed', feed_quantity: 24.85, cost_in_inr: 6652.15, water_supply: 68.52, hygiene_tips: 'Clean barn daily, vaccinate regularly', seasonal_tips: 'Summer: Provide shade and cool water, Winter: Ensure warmth, Rainy: Avoid damp areas.'},
+      'Buffalo': {area_size: 24.58, feed_type: 'Dry Feed', feed_quantity: 31.45, cost_in_inr: 7483.52, water_supply: 81.23, hygiene_tips: 'Ensure proper ventilation', seasonal_tips: 'Summer: Provide shade and cool water, Winter: Provide shelter, Rainy: Dry bedding is essential.'},
+      'Pig': {area_size: 15.25, feed_type: 'Concentrates', feed_quantity: 5.15, cost_in_inr: 4989.25, water_supply: 50.60, hygiene_tips: 'Use disinfectants weekly', seasonal_tips: 'Summer: Keep cool and dry, Winter: Ensure warmth, Rainy: Keep pens dry.'},
+      'Goat': {area_size: 10.21, feed_type: 'Green Feed', feed_quantity: 3.25, cost_in_inr: 3325.60, water_supply: 20.55, hygiene_tips: 'Provide clean bedding', seasonal_tips: 'Summer: Provide fresh water and shade, Winter: Ensure dry and warm shelter, Rainy: Avoid damp areas.'},
+      'Sheep': {area_size: 12.50, feed_type: 'Green Feed', feed_quantity: 4.75, cost_in_inr: 3741.75, water_supply: 25.80, hygiene_tips: 'Check for parasites regularly', seasonal_tips: 'Summer: Provide plenty of water, Winter: Keep warm with shelter, Rainy: Keep dry and prevent wool rot.'},
+      'Poultry': {area_size: 1.5, feed_type: 'Grain-based Feed', feed_quantity: 0.25, cost_in_inr: 120, water_supply: 0.5, hygiene_tips: 'Keep the coop clean and free from pests', seasonal_tips: 'Summer: Ensure proper ventilation, Winter: Provide heat and protection, Rainy: Keep the coop dry.'},
+      'Bee Hiving': {area_size: 10.25, feed_type: 'Sugar Syrup', feed_quantity: 0.5, cost_in_inr: 1500.55, water_supply: 0.25, hygiene_tips: 'Check for pests like mites and wax moths', seasonal_tips: 'Summer: Provide ample water sources, Winter: Ensure the bees have enough food stores, Rainy: Avoid disturbances.'},
+      'Sericulture': {area_size: 4.85, feed_type: 'Mulberry Leaves', feed_quantity: 0.1, cost_in_inr: 198.25, water_supply: 0.2, hygiene_tips: 'Maintain clean environment, avoid humidity', seasonal_tips: 'Summer: Maintain cool and dry conditions, Winter: Keep warm, Rainy: Ensure adequate airflow.'}
+    };
+
+    // Modal functions
+    function openModal(modalId) {
+      document.getElementById(modalId).style.display = 'block';
+    }
+
+    function closeModal(modalId) {
+      document.getElementById(modalId).style.display = 'none';
+    }
+
+    // Close modal when clicking outside
+    window.onclick = function(event) {
+      if (event.target.classList.contains('modal')) {
+        event.target.style.display = 'none';
+      }
+    }
+
+    // Rearing guidance form
+    document.getElementById('rearing-form').addEventListener('submit', function(e) {
+      e.preventDefault();
+      const animalType = document.getElementById('animal_type').value;
+      const count = parseInt(document.getElementById('number_of_animals').value);
+      
+      if (animalData[animalType] && count > 0) {
+        const data = animalData[animalType];
+        const results = `
+          <h3>Results for ${animalType} (${count} animals)</h3>
+          <ul style="list-style-type: none; padding: 0;">
+            <li style="padding: 8px; background: #f9f9f9; margin: 5px 0; border-radius: 5px;"><strong>Area Required:</strong> ${(data.area_size * count).toFixed(2)} sq ft</li>
+            <li style="padding: 8px; background: #f9f9f9; margin: 5px 0; border-radius: 5px;"><strong>Feed Type:</strong> ${data.feed_type}</li>
+            <li style="padding: 8px; background: #f9f9f9; margin: 5px 0; border-radius: 5px;"><strong>Feed Quantity:</strong> ${(data.feed_quantity * count).toFixed(2)} kg/day</li>
+            <li style="padding: 8px; background: #f9f9f9; margin: 5px 0; border-radius: 5px;"><strong>Cost:</strong> ₹${(data.cost_in_inr * count).toFixed(2)}</li>
+            <li style="padding: 8px; background: #f9f9f9; margin: 5px 0; border-radius: 5px;"><strong>Water Supply:</strong> ${(data.water_supply * count).toFixed(2)} liters/day</li>
+            <li style="padding: 8px; background: #f9f9f9; margin: 5px 0; border-radius: 5px;"><strong>Hygiene Tips:</strong> ${data.hygiene_tips}</li>
+            <li style="padding: 8px; background: #f9f9f9; margin: 5px 0; border-radius: 5px;"><strong>Seasonal Tips:</strong> ${data.seasonal_tips}</li>
+          </ul>
+        `;
+        document.getElementById('rearing-results').innerHTML = results;
+        document.getElementById('rearing-results').style.display = 'block';
+      }
+    });
+
+    // Chatbot functionality
+    function sendMessage() {
+      const input = document.getElementById('chat-input');
+      const message = input.value.trim();
+      if (!message) return;
+
+      const chatMessages = document.getElementById('chat-messages');
+      
+      // Add user message
+      const userMsg = document.createElement('div');
+      userMsg.style.cssText = 'background: #2C3E50; color: white; padding: 10px; border-radius: 10px; margin-bottom: 10px; text-align: right;';
+      userMsg.textContent = message;
+      chatMessages.appendChild(userMsg);
+
+      // Add bot response (simplified)
+      setTimeout(() => {
+        const botMsg = document.createElement('div');
+        botMsg.style.cssText = 'background: #f0f0f0; padding: 10px; border-radius: 10px; margin-bottom: 10px;';
+        botMsg.textContent = getBotResponse(message);
+        chatMessages.appendChild(botMsg);
+        chatMessages.scrollTop = chatMessages.scrollHeight;
+      }, 1000);
+
+      input.value = '';
+      chatMessages.scrollTop = chatMessages.scrollHeight;
+    }
+
+    function getBotResponse(message) {
+      const lowerMessage = message.toLowerCase();
+      if (lowerMessage.includes('feed') || lowerMessage.includes('food')) {
+        return 'For proper feeding, ensure you provide balanced nutrition based on the animal type. Cows need green feed, while poultry requires grain-based feed. Always provide fresh water.';
+      } else if (lowerMessage.includes('disease') || lowerMessage.includes('sick')) {
+        return 'If you notice any signs of illness, isolate the animal immediately and consult a veterinarian. Common signs include loss of appetite, lethargy, and unusual behavior.';
+      } else if (lowerMessage.includes('cost') || lowerMessage.includes('price')) {
+        return 'Costs vary by animal type and location. Use our Rearing Guidance tool to get specific cost estimates for your livestock.';
+      } else {
+        return 'Thank you for your question! For specific guidance on animal husbandry, please use our specialized tools or consult with a local veterinarian.';
+      }
+    }
+
+    // Disease detection (simplified)
+    function analyzeImage() {
+      const fileInput = document.getElementById('disease-image');
+      const resultsDiv = document.getElementById('disease-results');
+      
+      if (fileInput.files.length === 0) {
+        alert('Please select an image first.');
+        return;
+      }
+
+      resultsDiv.innerHTML = `
+        <div style="padding: 15px; background: #fff3cd; border: 1px solid #ffeaa7; border-radius: 5px; margin-top: 10px;">
+          <h4>Analysis Complete</h4>
+          <p><strong>Note:</strong> This is a demo version. For accurate disease detection, please consult with a qualified veterinarian.</p>
+          <p><strong>General Recommendations:</strong></p>
+          <ul>
+            <li>Monitor the animal closely for any changes</li>
+            <li>Ensure proper hygiene and clean environment</li>
+            <li>Provide adequate nutrition and fresh water</li>
+            <li>Contact a veterinarian if symptoms persist</li>
+          </ul>
+        </div>
+      `;
+    }
+
+    // Veterinary map
+    function findVetHospitals() {
+      if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(function(position) {
+          const lat = position.coords.latitude;
+          const lng = position.coords.longitude;
+          const mapsUrl = `https://www.google.com/maps/search/Veterinary+Hospitals/@${lat},${lng},15z`;
+          window.open(mapsUrl, '_blank');
+        }, function(error) {
+          alert('Error: Please allow location access to use this feature.');
+        });
+      } else {
+        alert('Geolocation is not supported by your browser.');
+      }
+    }
+
+    // Language translation
+    document.addEventListener("DOMContentLoaded", function () {
+      const savedLanguage = localStorage.getItem("selectedLanguage") || "en";
+      document.getElementById("language").value = savedLanguage;
+      translatePage(savedLanguage);
+    });
+
+    function changeLanguage() {
+      const selectedLanguage = document.getElementById("language").value;
+      localStorage.setItem("selectedLanguage", selectedLanguage);
+      translatePage(selectedLanguage);
+    }
+
+    function translatePage(targetLanguage) {
+      const elements = document.querySelectorAll("[data-translate]");
+
+      if (targetLanguage === "en") {
+        elements.forEach((el) => {
+          el.innerText = el.getAttribute("data-translate");
+        });
+        return;
+      }
+
+      elements.forEach((el) => {
+        const originalText = el.getAttribute("data-translate");
+        fetch(`https://translate.googleapis.com/translate_a/single?client=gtx&sl=auto&tl=${targetLanguage}&dt=t&q=${encodeURIComponent(originalText)}`)
+          .then((response) => response.json())
+          .then((data) => {
+            el.innerText = data[0][0][0];
+          })
+          .catch((error) => console.error("Translation error:", error));
+      });
+    }
+
+    // Enter key support for chat
+    document.getElementById('chat-input').addEventListener('keypress', function(e) {
+      if (e.key === 'Enter') {
+        sendMessage();
+      }
+    });
+  </script>
+</body>
+</html>

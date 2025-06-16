@@ -1,0 +1,11 @@
+{
+  "name": "agrovet-static",
+  "version": "1.0.0",
+  "description": "AgroVet - Static version for Netlify deployment",
+  "scripts": {
+    "build": "echo 'Build complete - static files ready'",
+    "dev": "python -m http.server 8000"
+  },
+  "devDependencies": {},
+  "dependencies": {}
+}
